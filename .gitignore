@@ -1,2 +1,5 @@
 # file://.gitignore
+bin
+*.log
+
 
