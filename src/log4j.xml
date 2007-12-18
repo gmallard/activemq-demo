@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<!-- ============================================================ -->
+<!-- @author Guy Allard                                           -->
+<!-- @since 2006                                                  -->
+<!-- ============================================================ -->
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+<!-- ============================================================ -->
+	<appender name="gmalog" 
+		class="org.apache.log4j.RollingFileAppender">
+		<!--
+		<param name="Threshold" value="DEBUG"/>
+		-->
+		<param name="File" value="log.gma.log"/>
+		<param name="Append" value="true"/>
+		<param name="MaxFileSize" value="4096KB"/>
+		<param name="MaxBackupIndex" value="100"/>
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" 
+				value="%d [%t] %-5p %c - %m%n"/>
+		</layout>
+	</appender> 
+<!--
+	<appender name="examplefile" 
+		class="org.apache.log4j.RollingFileAppender">
+
+		<param name="Threshold" value="DEBUG"/>
+
+		<param name="File" value="log.qrtz.example1.log"/>
+		<param name="Append" value="false"/>
+		<param name="MaxFileSize" value="500KB"/>
+		<param name="MaxBackupIndex" value="12"/>
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" 
+				value="%d [%t] %-5p %c - %m%n"/>
+		</layout>
+	</appender>
+-->	
+<!-- ============================================================ -->
+	<appender name="default" 
+		class="org.apache.log4j.ConsoleAppender">
+		<param name="target" value="System.out"/>
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" 
+				value="%d [%t] %-5p %c - %m%n"/>
+		</layout>
+	</appender>
+<!-- ============================================================ -->
+	<logger name="com.guyallard">
+		<level value="debug" /> <!-- FYI: The threshold= param in the 
+									appender overrides this -->
+		<appender-ref ref="gmalog" />
+	</logger>
+<!-- ============================================================ -->
+<!--
+	<logger name="com.guyallard.packagea">
+		<level value="debug" />
+		<appender-ref ref="examplefile" />
+	</logger>
+-->
+<!-- ============================================================ -->
+	<root>
+		<level value="warn" />
+		<appender-ref ref="default" />
+	</root>
+<!-- ============================================================ -->
+</log4j:configuration>
