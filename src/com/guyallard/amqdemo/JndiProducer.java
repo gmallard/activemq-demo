@@ -9,27 +9,23 @@ import javax.jms.JMSException;
 import javax.jms.MessageProducer;
 import javax.jms.Session;
 import javax.jms.TextMessage;
-import javax.jms.ConnectionMetaData;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
+/**
+ * 
+ * @author gallard
+ *
+ */
 public class JndiProducer {
 
     private static final Log LOG = LogFactory.getLog(JndiProducer.class);
 
-    private JndiProducer() {
-    }
-
-	
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-
+	public void go(String[] args)
+	{
         ConnectionFactory connectionFactory = null;
         Connection connection = null;
         Session session = null;
@@ -82,7 +78,7 @@ public class JndiProducer {
         /*
          * Create connection. Create session from connection; false means
          * session is not transacted. Create sender and text message. Send
-         * messages, varying text slightly. Send end-of-messages message.
+         * messages, varying text slightly.
          * Finally, close connection.
          */
         try {
@@ -92,13 +88,14 @@ public class JndiProducer {
             TextMessage message = session.createTextMessage();
             for (int i = 0; i < numMsgs; i++) {
                 message.setText("This is message " + (i + 1));
-                LOG.info("Sending message: " + message.getText());
+                LOG.info("Sending message: <" + message.getText() + ">");
                 producer.send(message);
             }
 
             /*
              * Send a non-text control message indicating end of messages.
              */
+            // Not used in this example!
             // producer.send(session.createMessage());
         } catch (JMSException e) {
             LOG.info("Exception occurred: " + e);

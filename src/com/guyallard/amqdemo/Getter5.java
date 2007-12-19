@@ -7,35 +7,32 @@ import javax.jms.MessageConsumer;
 import javax.jms.Session;
 import javax.jms.TextMessage;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import org.apache.activemq.ActiveMQConnection;
 import org.apache.activemq.ActiveMQConnectionFactory;
-
+/**
+ * 
+ * @author gallard
+ *
+ */
 public class Getter5 {
 
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		Getter5 g = new Getter5();
-		g.go();
-	}
-
+	private static final Log LOG = LogFactory.getLog(Getter5.class);
 	
 	private static long waitTime = 10000L;	// milliseconds
 	
-	private void go()
+	public void go()
 	{
 		String user = ActiveMQConnection.DEFAULT_USER;
 		String pass = ActiveMQConnection.DEFAULT_PASSWORD;
 		String broker = ActiveMQConnection.DEFAULT_BROKER_URL;
-		// String queName = "widgets";
-		// String queName = "GMA.Q01";
-		String queName = "example.MyQueue";
-		System.out.println("User: " + user);
-		System.out.println("Pass: " + pass);
-		System.out.println("Broker: " + broker);
-		System.out.println("Queue Name: " + queName);		
+		String queName = "GMA.Q01";
+		LOG.info("User: " + user);
+		LOG.info("Pass: " + pass);
+		LOG.info("Broker: " + broker);
+		LOG.info("Queue Name: " + queName);		
 		//
 		Connection conn = null;
 		Session sess = null;
@@ -44,14 +41,14 @@ public class Getter5 {
 			ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(user, pass, broker);			
 			conn = connectionFactory.createConnection();
 			conn.start();
-			System.out.println("connection started");
+			LOG.info("connection started");
 			// Create the session
 			sess = conn.createSession(false, Session.AUTO_ACKNOWLEDGE);
-			System.out.println("session created");
+			LOG.info("session created");
 			Destination destination = sess.createQueue(queName);
-			System.out.println("destination created");
+			LOG.info("destination created");
 			MessageConsumer consumer = sess.createConsumer(destination);
-			System.out.println("consumer created");
+			LOG.info("consumer created");
 			Message msg = null;
 			boolean cont = true;
 			while (cont) {
@@ -62,21 +59,21 @@ public class Getter5 {
 					msg = consumer.receive();
 				}
 				if (msg != null) {
-					System.out.println("message received");
+					LOG.info("message received");
 					TextMessage tmsg = (TextMessage)msg;
-					System.out.println("Message: <" + tmsg.getText() + ">");
+					LOG.info("Message: <" + tmsg.getText() + ">");
 				} else {
-					System.out.println("Receive Failed, null message after wait: "
+					LOG.info("Receive Failed, null message after wait: "
 							+ waitTime + "(ms)");
 					cont = false;
 				}
 			}
 		} catch(Exception ex) {
-			ex.printStackTrace();
+			LOG.error("Exception caught: ", ex);
 		} finally {
 			try { 
 				conn.close();
-				System.out.println("connection closed");
+				LOG.info("connection closed");
 			} catch (Throwable ignore) {
 			}
 		}

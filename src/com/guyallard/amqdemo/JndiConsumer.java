@@ -17,20 +17,17 @@ import javax.naming.NamingException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
+/**
+ * 
+ * @author gallard
+ *
+ */
 public class JndiConsumer {
 
     private static final Log LOG = LogFactory.getLog(JndiConsumer.class);
 
-    private JndiConsumer() {
-    }
-
-	
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-
+	public void go(String jndiName)
+	{
         ConnectionFactory connectionFactory = null;
         Connection connection = null;
         Session session = null;
@@ -38,11 +35,7 @@ public class JndiConsumer {
         MessageConsumer consumer = null;
         String destinationName = null;
 
-        if ((args.length < 1) || (args.length > 2)) {
-            LOG.info("Usage: java Simpleconsumer <destination-name> [<number-of-messages>]");
-            System.exit(1);
-        }
-        destinationName = args[0];
+        destinationName = jndiName;
         LOG.info("Receive name is " + destinationName);
 	
 		Properties props = new Properties();

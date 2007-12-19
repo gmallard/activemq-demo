@@ -8,36 +8,32 @@ import javax.jms.MessageProducer;
 import javax.jms.Session;
 import javax.jms.TextMessage;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import org.apache.activemq.ActiveMQConnection;
 import org.apache.activemq.ActiveMQConnectionFactory;
-
+/**
+ * 
+ * @author gallard
+ *
+ */
 public class Putter5 {
 
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-			System.out.println("Putter starts ....");
-			Putter5 p = new Putter5();
-			//
-			p.go();
-			//
-			System.out.println("Putter ends ....");
-		}
+    private static final Log LOG = LogFactory.getLog(Putter5.class);
+    
+		private static final int NUM_MSGS = 10;
 		
-		private void go()
+		public void go()
 		{
 			String user = ActiveMQConnection.DEFAULT_USER;
 			String pass = ActiveMQConnection.DEFAULT_PASSWORD;
 			String broker = ActiveMQConnection.DEFAULT_BROKER_URL;
-			// String queName = "widgets";
 			String queName = "GMA.Q01";
-			System.out.println("User: " + user);
-			System.out.println("Pass: " + pass);
-			System.out.println("Broker: " + broker);
-			System.out.println("Queue Name: " + queName);
+			LOG.info("User: " + user);
+			LOG.info("Pass: " + pass);
+			LOG.info("Broker: " + broker);
+			LOG.info("Queue Name: " + queName);
 			//
 			Connection conn = null;
 			Session sess = null;
@@ -46,27 +42,30 @@ public class Putter5 {
 				ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(user, pass, broker);			
 				conn = connectionFactory.createConnection();
 				conn.start();
-				System.out.println("connection started");
+				LOG.info("connection started");
 				// Create the session
 				sess = conn.createSession(false, Session.AUTO_ACKNOWLEDGE);
-				System.out.println("session created");
+				LOG.info("session created");
 				Destination destination = sess.createQueue(queName);
-				System.out.println("destination created");
+				LOG.info("destination created");
 				MessageProducer producer = sess.createProducer(destination);
-				System.out.println("producer created");
+				LOG.info("producer created");
 				producer.setDeliveryMode(DeliveryMode.PERSISTENT);
-				System.out.println("delivery mode set");
-				String smessage = "Message 01: " + new Date();
-				TextMessage message = sess.createTextMessage(smessage);
-				System.out.println("message created: " + smessage);
-				producer.send(message);
-				System.out.println("message sent");
+				LOG.info("delivery mode set");
+				for (int mc = 0; mc < NUM_MSGS; mc++)
+				{
+					String smessage = "Message " + (mc + 1) + " " + new Date();
+					TextMessage message = sess.createTextMessage(smessage);
+					LOG.info("message created: <" + smessage + ">");
+					producer.send(message);
+				}
+				LOG.info("message sent");
 			} catch(Exception ex) {
-				ex.printStackTrace();
+				LOG.error("Exception caught: ", ex);
 			} finally {
 				try { 
 					conn.close();
-					System.out.println("connection closed");
+					LOG.info("connection closed");
 				} catch (Throwable ignore) {
 				}
 			}
