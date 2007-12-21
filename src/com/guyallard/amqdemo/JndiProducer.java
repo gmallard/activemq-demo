@@ -74,7 +74,7 @@ public class JndiProducer {
 		Properties props = new Properties();
 		props.setProperty(Context.INITIAL_CONTEXT_FACTORY,"org.apache.activemq.jndi.ActiveMQInitialContextFactory");
 		props.setProperty(Context.PROVIDER_URL,"tcp://localhost:61616");
-		javax.naming.Context jndiContext = null;
+		Context jndiContext = null;
 		try {
 			jndiContext = new InitialContext(props);
 		} catch(NamingException nex) {
