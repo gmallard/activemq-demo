@@ -1,0 +1,18 @@
+This project contains Java code which uses JMS messaging, and which has been
+tested with Active MQ versions:
+
+- 5.0.0
+- 5.2.0
+
+Note:  this is an Eclipse project.  However, the Java JAR files required to 
+compile and run this code are not provided here.  See the '.classpath' file
+in this directory to understand what JAR files are required.  Setting this
+up properly will require modifications to the project's properties, specifically
+the build path.  The basic requirement for this are:
+
+- Apache's LOG4J
+- Apache's Active MQ
+
+Enjoy.
+
+Guy
