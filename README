@@ -7,12 +7,52 @@ tested with Active MQ versions:
 Note:  this is an Eclipse project.  However, the Java JAR files required to 
 compile and run this code are not provided here.  See the '.classpath' file
 in this directory to understand what JAR files are required.  Setting this
-up properly will require modifications to the project's properties, specifically
-the build path.  The basic requirement for this are:
+up properly will require modifications to the Eclipse project's properties, 
+specifically the build path.  The basic requirement for this are:
 
 - Apache's LOG4J
 - Apache's Active MQ
 
 Enjoy.
+
+Guy
+
+-------------------------------------------------------------------------------
+
+To Do List
+----------
+
+:TODO Add embedded consumer (?)
+:TODO Update docs (Author, Since, spelling, yada, yada .......)
+:TODO Support Eclipse *and* Netbeans (????)
+:TODO Command line build and run (scripts and/or Apache ant)
+:TODO ???? What else ????
+
+-------------------------------------------------------------------------------
+
+History
+-------
+
+Around December 2007 I started converting my personal SVN projects to git.  
+This was one of the first projects converted.
+
+This project has been stagnant since then, and just recently (February 2009) 
+loaded to github.
+
+For github users:  forks and patches are very welcome!!  I will accept any
+reasonable and working set of patches.  Please supply a driver method at
+a minimum (for testing).  I will review, test, commit and push as time 
+permits.
+
+There is a lot possible with AMQ.  I have just touched the surface.
+
+-------------------------------------------------------------------------------
+
+License:  None really folks.  This is pure public as far as I am concerned.
+
+Please keep my name and @author tags in the comments.  Not a requirement but
+a polite request.
+
+-------------------------------------------------------------------------------
 
 Guy
