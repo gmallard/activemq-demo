@@ -1,5 +1,7 @@
 package com.guyallard.amqdemo.embedded;
-//
+/**
+ * 
+ */
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
 import javax.jms.Destination;
@@ -10,22 +12,25 @@ import javax.jms.TextMessage;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
-
+//
 import org.apache.activemq.broker.BrokerService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
 /**
  * 
- *
+ * @author Guy Allard
+ * @since 2007.12.20
  */
 public final class Producer {
-
+	/**
+	 * A logger instance.
+	 */
     private static final Log LOG = LogFactory.getLog(Producer.class);
-
+    /**
+     * No argument constructor. 
+     */
     private Producer() {
     }
-
     /**
      * @param args the destination name to send to and optionally, the number of
      *                messages to send
@@ -52,7 +57,7 @@ public final class Producer {
         MessageProducer producer = null;
         String destinationName = null;
         final int numMsgs;
-
+        //
         if ((args.length < 1) || (args.length > 2)) {
             LOG.info("Usage: java Producer <destination-name> [<number-of-messages>]");
             System.exit(1);
@@ -64,7 +69,6 @@ public final class Producer {
         } else {
             numMsgs = 1;
         }
-
         /*
          * Create a JNDI API InitialContext object
          */
@@ -74,7 +78,6 @@ public final class Producer {
             LOG.info("Could not create JNDI API context: " + e.toString());
             System.exit(1);
         }
-
         /*
          * Look up connection factory and destination.
          */
@@ -87,7 +90,6 @@ public final class Producer {
             LOG.info("JNDI API lookup failed: " + e);
             System.exit(1);
         }
-
         /*
          * Create connection. Create session from connection; false means
          * session is not transacted. Create sender and text message. Send
@@ -104,7 +106,6 @@ public final class Producer {
                 LOG.info("Sending message: " + message.getText());
                 producer.send(message);
             }
-
             /*
              * Send a non-text control message indicating end of messages.
              */
@@ -119,7 +120,10 @@ public final class Producer {
                 }
             }
         }
-    	//
+    	/*
+    	 * Stop the broker.
+    	 * Ignore any exceptions. 
+    	 */
     	try {
     		LOG.info("starting stop");
     		broker.stop();
