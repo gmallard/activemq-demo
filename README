@@ -24,8 +24,12 @@ To Do List
 
 :TODO Add embedded consumer (?)
 :TODO Update docs (Author, Since, spelling, yada, yada .......)
+      (Started as of 03/11/2009).
 :TODO Support Eclipse *and* Netbeans (????)
 :TODO Command line build and run (scripts and/or Apache ant)
+:TODO Externalize all 'constants' (hard coded Strings)
+:TODO Isolate AMQ imports to one or two classes in their own package
+      (Factory / Builder ???)  
 :TODO ???? What else ????
 
 -------------------------------------------------------------------------------

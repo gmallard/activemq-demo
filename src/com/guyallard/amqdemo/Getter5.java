@@ -3,7 +3,9 @@
  * a JMS messaging system.
  */
 package com.guyallard.amqdemo;
-
+/**
+ * 
+ */
 import javax.jms.Connection;
 import javax.jms.Destination;
 import javax.jms.Message;

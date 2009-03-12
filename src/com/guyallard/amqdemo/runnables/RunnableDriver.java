@@ -1,5 +1,7 @@
 package com.guyallard.amqdemo.runnables;
-
+/**
+ * 
+ */
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Properties;
@@ -14,7 +16,12 @@ import javax.naming.NamingException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
+/**
+ * 
+ * @author Guy Allard
+ * @since 2007.12.20
+ *
+ */
 public class RunnableDriver {
 	/**
 	 * Logger instance
@@ -37,7 +44,7 @@ public class RunnableDriver {
      */
     private String destinationJndiName = "MyQueue";
     /**
-     * 
+     * No argument constructor. 
      */
     public RunnableDriver()
     {

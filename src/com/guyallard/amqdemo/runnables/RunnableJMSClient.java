@@ -1,12 +1,19 @@
 package com.guyallard.amqdemo.runnables;
-
+/**
+ * 
+ */
 import javax.jms.Connection;
 import javax.jms.Destination;
 import javax.jms.JMSException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
+/**
+ * 
+ * @author Guy Allard
+ * @since 2007.12.20
+ *
+ */
 public abstract class RunnableJMSClient implements Runnable {
 	/**
 	 * Logger instance

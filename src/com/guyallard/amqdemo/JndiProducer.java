@@ -3,7 +3,9 @@
  * a JMS messaging system.
  */
 package com.guyallard.amqdemo;
-
+/**
+ * 
+ */
 import java.util.Hashtable;
 import java.util.Properties;
 
@@ -72,6 +74,7 @@ public class JndiProducer {
         // of the AMQ server.
         //
 		Properties props = new Properties();
+		// :TODO Parameterize values.
 		props.setProperty(Context.INITIAL_CONTEXT_FACTORY,"org.apache.activemq.jndi.ActiveMQInitialContextFactory");
 		props.setProperty(Context.PROVIDER_URL,"tcp://localhost:61616");
 		Context jndiContext = null;
@@ -117,7 +120,6 @@ public class JndiProducer {
                 LOG.info("Sending message: <" + message.getText() + ">");
                 producer.send(message);
             }
-
             /*
              * Alternately, Send a non-text control message indicating end of messages.
              * Must be supported by the consumer!! Not used in this example!!

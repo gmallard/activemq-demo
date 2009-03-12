@@ -3,7 +3,9 @@
  * a JMS messaging system.
  */
 package com.guyallard.amqdemo;
-
+/**
+ * 
+ */
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 /**
