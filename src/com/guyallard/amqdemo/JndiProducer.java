@@ -120,6 +120,7 @@ public class JndiProducer {
                 LOG.info("Sending message: <" + message.getText() + ">");
                 producer.send(message);
             }
+            LOG.info("Sends complete.");
             /*
              * Alternately, Send a non-text control message indicating end of messages.
              * Must be supported by the consumer!! Not used in this example!!
