@@ -2,10 +2,12 @@ package com.guyallard.amqdemo.runnables;
 /**
  * 
  */
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Properties;
-
+//
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
 import javax.jms.Destination;
@@ -13,9 +15,11 @@ import javax.jms.JMSException;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
-
+//
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+//
+import com.guyallard.amqdemo.GlobalData;
 /**
  * 
  * @author Guy Allard
@@ -48,6 +52,14 @@ public class RunnableDriver {
      */
     public RunnableDriver()
     {
+		try {
+			InputStream is = this.getClass().getResourceAsStream("/amqdemo.properties");
+			GlobalData.props.load( is );
+		}
+		catch(IOException ioex) {
+			LOG.error("IOE: amqdemo.properties", ioex);
+			// percolate
+		}
     }
     /**
 	 * @param args
