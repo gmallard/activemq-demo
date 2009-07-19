@@ -8,7 +8,6 @@ import javax.jms.JMSException;
 import javax.jms.Session;
 import javax.jms.TextMessage;
 import javax.jms.MessageProducer;
-import javax.jms.TextMessage;
 //
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

@@ -4,8 +4,6 @@ package com.guyallard.amqdemo.runnables;
  */
 import javax.jms.Connection;
 import javax.jms.Destination;
-import javax.jms.JMSException;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 /**
