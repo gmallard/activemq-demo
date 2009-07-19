@@ -54,12 +54,13 @@ public class RunnableConsumer extends RunnableJMSClient {
 			//
 			Message message = null;
 			while (true) {
+				LOG.info("Starting receive ....");
 				message = consumer.receive(10000L);		// 10 secs, for now
 				if (message == null) break;
 				TextMessage tmsg = (TextMessage)message;
 				LOG.info("Received Message: <" + tmsg.getText() + ">");
 				try {
-					Thread.sleep(1000L);
+					Thread.sleep(5000L);
 				}
 				catch(InterruptedException iex)
 				{
