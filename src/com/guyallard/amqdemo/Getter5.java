@@ -1,5 +1,5 @@
 /**
- * A short demonstration of using Active MQ (http://www/apache.org) as 
+ * A short demonstration of using Active MQ (http://www.apache.org) as 
  * a JMS messaging system.
  */
 package com.guyallard.amqdemo;
@@ -12,9 +12,9 @@ import javax.jms.Message;
 import javax.jms.MessageConsumer;
 import javax.jms.Session;
 import javax.jms.TextMessage;
-
-import org.apache.activemq.ActiveMQConnection;
+//
 import org.apache.activemq.ActiveMQConnectionFactory;
+//
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 /**
@@ -31,24 +31,29 @@ public class Getter5 {
 	/**
 	 * Class parameter.
 	 */
-	private static long waitTime = 10000L;	// milliseconds
+	private long waitTime = 1000L;	// milliseconds
 	/**
 	 * Consume messages until it appears there are no more to be
 	 * had.
 	 */
 	public void go()
 	{
+		String work = GlobalData.props.getProperty("getter.wait");
+		if (work != null)
+		{
+			waitTime = new Long(work).longValue();			
+		}
 		//
 		// Initialize parameters.
 		//
-		String user = ActiveMQConnection.DEFAULT_USER;
-		String pass = ActiveMQConnection.DEFAULT_PASSWORD;
-		String broker = ActiveMQConnection.DEFAULT_BROKER_URL;
-		String queName = "GMA.Q01";
+		String user = GlobalData.props.getProperty("user.name");
+		String pass = GlobalData.props.getProperty("user.password");
+		String broker = GlobalData.props.getProperty("broker.url");
+		String queName = GlobalData.props.getProperty("putter.queue");
 		LOG.info("User: " + user);
 		LOG.info("Pass: " + pass);
 		LOG.info("Broker: " + broker);
-		LOG.info("Queue Name: " + queName);		
+		LOG.info("Queue Name: " + queName);
 		//
 		Connection conn = null;
 		Session sess = null;

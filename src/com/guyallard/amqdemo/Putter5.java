@@ -1,5 +1,5 @@
 /**
- * A short demonstration of using Active MQ (http://www/apache.org) as 
+ * A short demonstration of using Active MQ (http://www.apache.org) as 
  * a JMS messaging system.
  */
 package com.guyallard.amqdemo;
@@ -7,6 +7,7 @@ package com.guyallard.amqdemo;
  * 
  */
 import java.util.Date;
+// import java.util.Properties;
 //
 import javax.jms.Connection;
 import javax.jms.DeliveryMode;
@@ -15,8 +16,8 @@ import javax.jms.MessageProducer;
 import javax.jms.Session;
 import javax.jms.TextMessage;
 //
-import org.apache.activemq.ActiveMQConnection;
 import org.apache.activemq.ActiveMQConnectionFactory;
+//
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 /**
@@ -33,19 +34,25 @@ public class Putter5 {
 	/**
 	 * A parameter for the class.
 	 */
-	private static final int NUM_MSGS = 10;
+	private int num_messages = 10;
 	/**
 	 * Produce JMS messages.
 	 */
 	public void go()
 	{
+		String work = GlobalData.props.getProperty("putter.num.messages");
+		if (work != null)
+		{
+			num_messages = new Integer(work).intValue();			
+		}
+		LOG.info("Number of messages to put: " + num_messages);
 		//
 		// Define initial access data.
 		//
-		String user = ActiveMQConnection.DEFAULT_USER;
-		String pass = ActiveMQConnection.DEFAULT_PASSWORD;
-		String broker = ActiveMQConnection.DEFAULT_BROKER_URL;
-		String queName = "GMA.Q01";
+		String user = GlobalData.props.getProperty("user.name");
+		String pass = GlobalData.props.getProperty("user.password");
+		String broker = GlobalData.props.getProperty("broker.url");
+		String queName = GlobalData.props.getProperty("putter.queue");
 		LOG.info("User: " + user);
 		LOG.info("Pass: " + pass);
 		LOG.info("Broker: " + broker);
@@ -87,7 +94,7 @@ public class Putter5 {
 			//
 			// Create and produce messages.
 			//
-			for (int mc = 0; mc < NUM_MSGS; mc++)
+			for (int mc = 0; mc < num_messages; mc++)
 			{
 				String smessage = "Message " + (mc + 1) + " " + new Date();
 				TextMessage message = sess.createTextMessage(smessage);

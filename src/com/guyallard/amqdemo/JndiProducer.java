@@ -1,5 +1,5 @@
 /**
- * A short demonstration of using Active MQ (http://www/apache.org) as 
+ * A short demonstration of using Active MQ (http://www.apache.org) as 
  * a JMS messaging system.
  */
 package com.guyallard.amqdemo;
@@ -74,9 +74,10 @@ public class JndiProducer {
         // of the AMQ server.
         //
 		Properties props = new Properties();
-		// :TODO Parameterize values.
-		props.setProperty(Context.INITIAL_CONTEXT_FACTORY,"org.apache.activemq.jndi.ActiveMQInitialContextFactory");
-		props.setProperty(Context.PROVIDER_URL,"tcp://localhost:61616");
+		props.setProperty(Context.INITIAL_CONTEXT_FACTORY,
+				GlobalData.props.getProperty("broker.factory"));
+		props.setProperty(Context.PROVIDER_URL,
+				GlobalData.props.getProperty("broker.url"));
 		Context jndiContext = null;
 		try {
 			jndiContext = new InitialContext(props);

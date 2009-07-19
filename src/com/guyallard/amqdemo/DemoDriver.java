@@ -1,8 +1,13 @@
 /**
- * A short demonstration of using Active MQ (http://www/apache.org) as 
+ * A short demonstration of using Active MQ (http://www.apache.org) as 
  * a JMS messaging system.
  */
 package com.guyallard.amqdemo;
+/**
+ * 
+ */
+import java.io.InputStream;
+import java.io.IOException;
 /**
  * 
  */
@@ -19,6 +24,21 @@ public class DemoDriver {
 	 * Logger instance.
 	 */
     private static final Log LOG = LogFactory.getLog(DemoDriver.class);
+	/**
+	 * No args CTOR
+	 */
+	public DemoDriver()
+	{
+		//
+		try {
+			InputStream is = this.getClass().getResourceAsStream("/amqdemo.properties");
+			GlobalData.props.load( is );
+		}
+		catch(IOException ioex) {
+			LOG.error("IOE: amqdemo.properties", ioex);
+			// percolate
+		}
+	}
 	/**
 	 * @param args
 	 */
@@ -45,9 +65,9 @@ public class DemoDriver {
 		//
 		// JNDI Consumer/Producer parameters.
 		//
-		String[] args = {
-			"MyQueue", "5"	
-		};
+		String[] args = new String[2];
+		args[0] = GlobalData.props.getProperty("jndi.queue");
+		args[1] = GlobalData.props.getProperty("jndi.num.messages");
 		//
 		// JNDI Producer.
 		//
