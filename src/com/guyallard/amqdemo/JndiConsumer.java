@@ -55,24 +55,32 @@ public class JndiConsumer {
         //
         destinationName = jndiName;
         LOG.info("Receive name is " + destinationName);
-        //
-        // Create the JNDI lookup table.  Note: for AMQ, this primes the 
-        // properties from file 'jndi.properties' which must be on the CLASSPATH.
-        // The *same* 'jndi.properties' definitions should be on the CLASSPATH
-        // of the AMQ server.
-        //
-		Properties props = new Properties();
-		props.setProperty(Context.INITIAL_CONTEXT_FACTORY,
-				GlobalData.props.getProperty("broker.factory"));
-		props.setProperty(Context.PROVIDER_URL,
-				GlobalData.props.getProperty("broker.url"));
-		Context jndiContext = null;
-		try {
-			jndiContext = new InitialContext(props);
-		} catch(NamingException nex) {
-			LOG.error("Context Create Failed! ", nex);
-			System.exit(1);
-		}
+ // There are several ways to code for JNDI lookups.
+ // Start Method 1
+         /*
+ 		Properties props = new Properties();
+ 		props.setProperty(Context.INITIAL_CONTEXT_FACTORY,
+ 				GlobalData.props.getProperty("broker.factory"));
+ 		props.setProperty(Context.PROVIDER_URL,
+ 				GlobalData.props.getProperty("broker.url"));
+ 		Context jndiContext = null;
+ 		try {
+ 			jndiContext = new InitialContext(props);
+ 		} catch(NamingException nex) {
+ 			LOG.error("Context Create Failed! ", nex);
+ 			System.exit(1);
+ 		}
+ 		*/
+ // End Method 1        
+ // Start Method 2
+     		Context jndiContext = null;
+     		try {
+     			jndiContext = new InitialContext();
+     		} catch(NamingException nex) {
+     			LOG.error("Context Create Failed! ", nex);
+     			System.exit(1);
+     		}
+// End Method 2		
         LOG.info("Context Create Complete!");
         /*
          * Look up connection factory and destination.
