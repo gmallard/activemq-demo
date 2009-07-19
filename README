@@ -30,6 +30,16 @@ To Do List
 :TODO Add Ruby / stamp example (I have this code somewhere.  Where?)  
 :TODO ???? What else ????
 
+Problems
+--------
+
+1) The runnable example does not appear to work as I expect it to.  Examining
+the log file indicates that only one message receiver thread ever actually
+gets messages.  I have no earthly idea what causes this.  I expect the two 
+receiver threads to receive (roughly) the same amount of messages.  Any help
+with this would be appreciated.
+
+ 
 -------------------------------------------------------------------------------
 
 History
