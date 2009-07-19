@@ -7,7 +7,6 @@ package com.guyallard.amqdemo;
  * 
  */
 import java.util.Date;
-// import java.util.Properties;
 //
 import javax.jms.Connection;
 import javax.jms.DeliveryMode;
@@ -15,8 +14,6 @@ import javax.jms.Destination;
 import javax.jms.MessageProducer;
 import javax.jms.Session;
 import javax.jms.TextMessage;
-//
-import org.apache.activemq.ActiveMQConnectionFactory;
 //
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -67,8 +64,7 @@ public class Putter5 {
 			//
 			// Create the connection and start it.
 			//
-			ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(user, pass, broker);			
-			conn = connectionFactory.createConnection();
+			conn = MessageUtils.getConnection(user, pass, broker);
 			conn.start();
 			LOG.info("connection started");
 			//
