@@ -58,6 +58,13 @@ public class RunnableConsumer extends RunnableJMSClient {
 				if (message == null) break;
 				TextMessage tmsg = (TextMessage)message;
 				LOG.info("Received Message: <" + tmsg.getText() + ">");
+				try {
+					Thread.sleep(1000L);
+				}
+				catch(InterruptedException iex)
+				{
+					
+				}
 			}
 			session.close();
 		}
