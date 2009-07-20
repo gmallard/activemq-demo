@@ -21,15 +21,15 @@ import org.apache.commons.logging.LogFactory;
  * @author Guy Allard
  * @since 2007.12.20
  */
-public final class Producer {
+public final class EmbeddedProducer {
 	/**
 	 * A logger instance.
 	 */
-    private static final Log LOG = LogFactory.getLog(Producer.class);
+    private static final Log LOG = LogFactory.getLog(EmbeddedProducer.class);
     /**
      * No argument constructor. 
      */
-    private Producer() {
+    private EmbeddedProducer() {
     }
     /**
      * @param args the destination name to send to and optionally, the number of
@@ -59,7 +59,7 @@ public final class Producer {
         final int numMsgs;
         //
         if ((args.length < 1) || (args.length > 2)) {
-            LOG.info("Usage: java Producer <destination-name> [<number-of-messages>]");
+            LOG.info("Usage: java EmbeddedProducer <destination-name> [<number-of-messages>]");
             System.exit(1);
         }
         destinationName = args[0];
