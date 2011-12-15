@@ -6,6 +6,8 @@ import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
 import javax.jms.Destination;
 import javax.jms.JMSException;
+import javax.jms.Message;
+import javax.jms.MessageConsumer;
 import javax.jms.MessageProducer;
 import javax.jms.Session;
 import javax.jms.TextMessage;
@@ -21,26 +23,29 @@ import org.apache.commons.logging.LogFactory;
  * @author Guy Allard
  * @since 2007.12.20
  */
-public final class EmbeddedProducer {
+public final class EmbeddedBrooker {
 	/**
 	 * A logger instance.
 	 */
-    private static final Log LOG = LogFactory.getLog(EmbeddedProducer.class);
+    private static final Log LOG = LogFactory.getLog(EmbeddedBrooker.class);
     /**
      * No argument constructor. 
      */
-    private EmbeddedProducer() {
+    private EmbeddedBrooker() {
     }
     /**
      * @param args the destination name to send to and optionally, the number of
      *                messages to send
      */
     public static void main(String[] args) {
+    	//
+    	// Startup phase
+    	//
     	BrokerService broker = null;
     	try {
     		// broker = BrokerFactory.createBroker(new URI("xbean:activemq.xml"));
     		broker = new BrokerService();
-    		broker.addConnector("tcp://localhost:61616");    		
+    		broker.addConnector("tcp://localhost:11613");    		
     		broker.start();
     	} catch(Exception ex) {
     		LOG.error("Broker create failed: ", ex);
@@ -48,6 +53,8 @@ public final class EmbeddedProducer {
     	}
     	LOG.info("broker is running");
     	LOG.info("connURI: " + broker.getVmConnectorURI());
+    	//
+    	// Producer/putter/send phase
     	//
         Context jndiContext = null;
         ConnectionFactory connectionFactory = null;
@@ -59,7 +66,7 @@ public final class EmbeddedProducer {
         final int numMsgs;
         //
         if ((args.length < 1) || (args.length > 2)) {
-            LOG.info("Usage: java EmbeddedProducer <destination-name> [<number-of-messages>]");
+            LOG.info("Usage: java EmbeddedBroker <destination-name> [<number-of-messages>]");
             System.exit(1);
         }
         destinationName = args[0];
@@ -109,9 +116,52 @@ public final class EmbeddedProducer {
             /*
              * Send a non-text control message indicating end of messages.
              */
-            producer.send(session.createMessage());
+            // producer.send(session.createMessage());	// Do not do this in this example.
         } catch (JMSException e) {
-            LOG.info("Exception occurred: " + e);
+            LOG.info("Send Phase Exception occurred: " + e);
+        } finally {
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (JMSException e) {
+                }
+            }
+        }
+        //
+        // Consumer/getter/receive phase
+        //
+        try {
+        	LOG.info("Receive phase started: " + destination);
+        	//
+        	// Create the connection and start it.
+        	//
+            connection = connectionFactory.createConnection();
+            connection.start();		// Important!! to receive anything!!
+            //
+            // Create the session.
+            //
+            session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+            MessageConsumer consumer = null;        	
+        	consumer = session.createConsumer(destination);
+            //
+            // Receive messages until it appears there are no more being 
+            // produced.
+            //
+            Message message = null;
+            while (true) {
+            	message = consumer.receive(10000L);
+            	if (message == null) break;
+            	LOG.info("Raw Message: <" + message + ">");
+            	TextMessage tmsg = (TextMessage)message;
+            	LOG.info("Received Message: <" + tmsg.getText() + ">");
+            }
+            //
+            // Stop the connection.
+            //
+            connection.stop();
+        	LOG.info("Receive phase complete");            
+        } catch (JMSException e) {
+            LOG.info("Receive Phase Exception occurred: " + e);
         } finally {
             if (connection != null) {
                 try {
