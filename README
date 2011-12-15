@@ -14,6 +14,9 @@ specifically the build path.  The basic requirements for this are:
 - Apache's LOG4J
 - Apache's Active MQ
 
+You will also have to configure your Eclipse run configurations for some of
+these examples with the proper arguments.
+
 Enjoy.
 
 Guy
@@ -23,7 +26,6 @@ Guy
 To Do List
 ----------
 
-:TODO Rename the embedded producer, and include a consumer.
 :TODO Command line build and run (scripts and/or Apache ant)
 :TODO Isolate AMQ imports to one or two classes in their own package
       (Factory / Builder ???) 
@@ -46,6 +48,11 @@ a minimum (for testing).  I will review, test, commit and push as time
 permits.
 
 There is a lot possible with AMQ.  I have just touched the surface.
+
+-------------------------------------------------------------------------------
+
+Recently added: Companion Ruby producer and consumer.  AMQ allows easy integration
+of JMS and STOMP.
 
 -------------------------------------------------------------------------------
 
