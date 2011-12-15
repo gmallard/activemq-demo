@@ -23,15 +23,15 @@ import org.apache.commons.logging.LogFactory;
  * @author Guy Allard
  * @since 2007.12.20
  */
-public final class EmbeddedBrooker {
+public final class EmbeddedBroker {
 	/**
 	 * A logger instance.
 	 */
-    private static final Log LOG = LogFactory.getLog(EmbeddedBrooker.class);
+    private static final Log LOG = LogFactory.getLog(EmbeddedBroker.class);
     /**
      * No argument constructor. 
      */
-    private EmbeddedBrooker() {
+    private EmbeddedBroker() {
     }
     /**
      * @param args the destination name to send to and optionally, the number of
