@@ -7,7 +7,6 @@ package com.guyallard.amqdemo;
  * 
  */
 import java.util.Hashtable;
-import java.util.Properties;
 
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
@@ -22,6 +21,9 @@ import javax.naming.NamingException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+//
+import java.io.InputStream;
+import java.io.IOException;
 /**
  * 
  * @author Guy Allard
@@ -156,4 +158,30 @@ public class JndiProducer {
         }
         LOG.info("run complete");
 	}
+
+	public void init()
+	{
+		//
+		try {
+			InputStream is = this.getClass().getResourceAsStream("/amqdemo.properties");
+			GlobalData.props.load( is );
+		}
+		catch(IOException ioex) {
+			LOG.error("IOE: amqdemo.properties", ioex);
+			// percolate
+		}
+	}
+	
+	public static void main(String[] args)
+	{
+		JndiProducer jp = new JndiProducer();
+		jp.init();
+		String[] pargs = new String[2];
+		pargs[0] = GlobalData.props.getProperty("jndi.queue");
+		LOG.debug("jndi.queue: " + pargs[0]);
+		pargs[1] = GlobalData.props.getProperty("jndi.num.messages");
+		LOG.debug("jndi.num.messages: " + pargs[1]);
+		jp.go(pargs);
+	}
+	
 }

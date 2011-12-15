@@ -7,7 +7,6 @@ package com.guyallard.amqdemo;
  * 
  */
 import java.util.Hashtable;
-import java.util.Properties;
 
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
@@ -24,6 +23,9 @@ import javax.naming.NamingException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+//
+import java.io.InputStream;
+import java.io.IOException;
 /**
  * 
  * @author Guy Allard
@@ -140,6 +142,7 @@ public class JndiConsumer {
             while (true) {
             	message = consumer.receive(10000L);
             	if (message == null) break;
+            	LOG.info("Raw Message: <" + message + ">");
             	TextMessage tmsg = (TextMessage)message;
             	LOG.info("Received Message: <" + tmsg.getText() + ">");
             }
@@ -164,4 +167,26 @@ public class JndiConsumer {
         }
         LOG.info("run complete");
 	}
+
+	public void init()
+	{
+		//
+		try {
+			InputStream is = this.getClass().getResourceAsStream("/amqdemo.properties");
+			GlobalData.props.load( is );
+		}
+		catch(IOException ioex) {
+			LOG.error("IOE: amqdemo.properties", ioex);
+			// percolate
+		}
+	}
+	
+	public static void main(String[] args)
+	{
+		JndiConsumer jc = new JndiConsumer();
+		jc.init();
+		String pargs = GlobalData.props.getProperty("jndi.queue");
+		jc.go(pargs);
+	}
+	
 } // end of class

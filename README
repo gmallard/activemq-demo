@@ -3,6 +3,7 @@ tested with Active MQ versions:
 
 - 5.0.0
 - 5.2.0
+- 5.5.0
 
 Note:  this is an Eclipse project.  However, the Java JAR files required to 
 compile and run this code are not provided here.  See the '.classpath' file
@@ -22,24 +23,12 @@ Guy
 To Do List
 ----------
 
-:TODO Add embedded consumer (?)
-:TODO Support Eclipse *and* Netbeans (????)
+:TODO Rename the embedded producer, and include a consumer.
 :TODO Command line build and run (scripts and/or Apache ant)
 :TODO Isolate AMQ imports to one or two classes in their own package
       (Factory / Builder ???) 
-:TODO Add Ruby / stamp example (I have this code somewhere.  Where?)  
 :TODO ???? What else ????
 
-Problems
---------
-
-1) The runnable example does not appear to work as I expect it to.  Examining
-the log file indicates that only one message receiver thread ever actually
-gets messages.  I have no earthly idea what causes this.  I expect the two 
-receiver threads to receive (roughly) the same amount of messages.  Any help
-with this would be appreciated.
-
- 
 -------------------------------------------------------------------------------
 
 History

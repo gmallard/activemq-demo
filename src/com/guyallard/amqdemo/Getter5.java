@@ -17,6 +17,9 @@ import org.apache.activemq.ActiveMQConnectionFactory;
 //
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+//
+import java.io.InputStream;
+import java.io.IOException;
 /**
  * 
  * @author Guy Allard
@@ -126,6 +129,26 @@ public class Getter5 {
 			}
 		}
 
+	}
+	
+	public void init()
+	{
+		//
+		try {
+			InputStream is = this.getClass().getResourceAsStream("/amqdemo.properties");
+			GlobalData.props.load( is );
+		}
+		catch(IOException ioex) {
+			LOG.error("IOE: amqdemo.properties", ioex);
+			// percolate
+		}
+	}
+	
+	public static void main(String[] args)
+	{
+		Getter5 g5 = new Getter5();
+		g5.init();
+		g5.go();
 	}
 } // end of class
 
